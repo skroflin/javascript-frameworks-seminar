@@ -11,7 +11,7 @@ app.get('/health', (req, res) => {
 
 
 app.use(express.json());
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }));
 
 
 app.use((_req, res, next) => {

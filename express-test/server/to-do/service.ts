@@ -29,15 +29,16 @@ export async function getTodoById(todoId: string) {
     return todo.rows[0]
 }
 
-export async function insertTodo(title: string, description: string, dateCreated: string, isDone: boolean) {
+export async function insertTodo(title: string, description: string, isDone: boolean) {
     await transactionQuery(async (client) => {
         await client.query(`
             insert into
             to_do
             ("title", "description", "date_created", "is_done")
             values
-            ($1, $2, TO_DATE($3, 'YYYY-MM-DD'), $4)
-        `, [title, description, dateCreated, isDone])
+            ($1, $2, CURRENT_DATE, $3)
+            returning *
+        `, [title, description, isDone])
     })
 }
 
@@ -48,9 +49,11 @@ export async function updateTodo(id: string, title: string, description: string,
             set
             "title" = $2,
             "description" = $3,
-            "is_done" = $4
+            "is_done" = $4,
+            "date_updated" = CURRENT_DATE
             where
             "id" = $1
+            returning *
         `, [id, title, description, isDone])
     })
 }

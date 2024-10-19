@@ -24,9 +24,9 @@ router.get("/:id", async function (req: Request, res: Response, next: NextFuncti
 
 router.post("/", async function (req: Request, res: Response, next: NextFunction) {
     try {
-        const { title, description, dateCreated, isDone } = req.body
-        res.json(await insertTodo(title, description, dateCreated, isDone))
-        console.log(`Added new todo with values: ${title}, ${description}, ${dateCreated} and ${isDone}.`)
+        const { title, description, isDone } = req.body
+        res.json(await insertTodo(title, description, isDone))
+        console.log(`Added new todo with values: ${title}, ${description} and ${isDone}.`)
     } catch (e) {
         next(e)
     }
