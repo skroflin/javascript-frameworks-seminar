@@ -37,7 +37,7 @@ router.put("/:id", async function (req: Request, res: Response, next: NextFuncti
         const { id } = req.params
         const { title, description, isDone } = req.body
         res.json(await updateTodo(id, title, description, isDone))
-        console.log(`Updated todo with id: ${id}. Updated values: ${title}, ${description}, ${isDone}.`)
+        console.log(`Updated todo with id: ${id}. Updated values: ${title}, ${description} and ${isDone}.`)
     } catch (e) {
         next(e)
     }
