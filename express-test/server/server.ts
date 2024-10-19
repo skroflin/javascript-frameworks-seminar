@@ -1,5 +1,6 @@
 import express from "express";
 import http from 'http';
+import cors from 'cors'
 
 const app = express()
 const server = http.createServer(app)
@@ -19,6 +20,12 @@ app.use((_req, res, next) => {
   next();
 });
 
+const corsOptions = {
+  origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 app.use('/api/to-do', require('./to-do/routes'))
 

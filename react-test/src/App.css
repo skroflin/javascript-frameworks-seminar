@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,87 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.todo-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: beige;
+}
+
+.todo-card-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.todo-card-header>h3 {
+  text-align: center;
+  margin-left: 20%;
+}
+
+.icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-icon {
+  color: red;
+}
+
+.edit-icon {
+  color: blue;
+}
+
+.todo-footer-completed {
+  color: green;
+}
+
+.todo-footer-not {
+  color: darkred;
+}
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-form input,
+.todo-form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.todo-form button {
+  padding: 8px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todo-form button:hover {
+  background-color: #45a049;
 }
