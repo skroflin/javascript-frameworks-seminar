@@ -3,13 +3,19 @@
         <div class="todo-card-header">
             <h3>{{ todo.title }}</h3>
             <div>
-                <button @click="$emit('update', todo)" class="icon edit-icon">Edit</button>
-                <button @click="$emit('delete', todo.id)" class="icon delete-icon">Delete</button>
+                <button @click="$emit('update', todo)" class="button edit-button">Edit</button>
+                <button @click="$emit('delete', todo.id)" class="button delete-button">Delete</button>
             </div>
         </div>
+        <hr>
         <p>{{ todo.description }}</p>
-        <p>Created: {{ formatDate(todo.dateCreated) }}</p>
-        <p>Status: {{ todo.isDone ? 'Completed' : 'Not completed' }}</p>
+        <footer>
+            <strong>Created:</strong>
+            <p class="date">{{ formatDate(todo.dateCreated) }}</p>
+            <strong>Status:</strong>
+            <p v-if="todo.isDone" class="completed">Completed</p>
+            <p v-else class="not-completed">Not completed</p>
+        </footer>
     </div>
 </template>
 
@@ -42,23 +48,46 @@ const formatDate = (dateString) => {
 
 .todo-card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
-.icon {
+.button {
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 5px;
     background: none;
     border: none;
     font-size: 1em;
 }
 
-.delete-icon {
+.delete-button {
     color: red;
 }
 
-.edit-icon {
+.delete-button:hover {
+    color: darkred;
+}
+
+.edit-button {
     color: blue;
+}
+
+.edit-button:hover {
+    color: darkblue;
+}
+
+.date {
+    color: darkblue;
+    font-style: italic;
+}
+
+.completed {
+    color: darkgreen;
+    font-size: 15px;
+}
+
+.not-completed {
+    color: darkred;
+    font-size: 15px;
 }
 </style>

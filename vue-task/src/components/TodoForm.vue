@@ -1,13 +1,14 @@
 <template>
     <form @submit.prevent="onSubmit" class="todo-form">
-        <input v-model="todoData.title" placeholder="Title" required>
-        <textarea v-model="todoData.description" placeholder="Description" required></textarea>
+        <input v-model="todoData.title" placeholder="Title..." required>
+        <textarea v-model="todoData.description" placeholder="Description..." required></textarea>
         <label>
+            Check if the task is completed.
             <input type="checkbox" v-model="todoData.isDone">
-            Completed
         </label>
         <button type="submit">{{ todoData.id ? 'Update' : 'Add' }} Todo</button>
     </form>
+    <hr>
 </template>
 
 <script setup>
@@ -28,12 +29,12 @@ const todoData = ref({
 
 watch(() => props.initialTodo, (newVal) => {
     if (newVal) {
-        todoData.value = { 
+        todoData.value = {
             id: newVal.id,
             title: newVal.title,
             description: newVal.description,
             isDone: newVal.isDone
-         };
+        };
     } else {
         todoData.value = { id: null, title: '', description: '', isDone: false };
     }
