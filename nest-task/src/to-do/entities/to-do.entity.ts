@@ -16,4 +16,7 @@ export class ToDoEntity {
 
     @Column({ name: 'is_done', default: 'false' })
     isDone: boolean;
+
+    @Column({ name: 'date_updated', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    dateUpdated: Date;
 }

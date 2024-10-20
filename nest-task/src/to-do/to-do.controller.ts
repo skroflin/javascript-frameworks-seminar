@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { ToDoService } from './to-do.service';
 import { CreateToDoDto } from './dto/create-to-do.dto';
 import { UpdateToDoDto } from './dto/update-to-do.dto';
@@ -12,10 +12,11 @@ export class ToDoController {
     @Body() createToDoDto: CreateToDoDto
   ) {
     try {
-      await this.toDoService.create(createToDoDto);
+      const newTodo = await this.toDoService.create(createToDoDto);
       return {
         success: true,
-        message: `Todo created successfully.`
+        message: `Todo created successfully.`,
+        data: newTodo
       }
     } catch (error) {
       return {
@@ -61,13 +62,14 @@ export class ToDoController {
     }
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateToDoDto: UpdateToDoDto) {
     try {
-      await this.toDoService.update(+id, updateToDoDto);
+      const updatedTodo = await this.toDoService.update(+id, updateToDoDto);
       return {
         success: true,
-        message: `Todo with id: ${id} updated successfully.`
+        message: `Todo with id: ${id} updated successfully.`,
+        data: updatedTodo
       }
     } catch (error) {
       return {

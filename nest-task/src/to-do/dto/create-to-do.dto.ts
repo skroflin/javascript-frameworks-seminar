@@ -1,5 +1,5 @@
 import { Type } from "@nestjs/class-transformer";
-import { IsBoolean, IsDateString, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsDateString, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateToDoDto {
     @IsNotEmpty()
@@ -10,7 +10,7 @@ export class CreateToDoDto {
     @IsString()
     description: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsDateString()
     @Type(() => Date)
     dateCreated: Date;

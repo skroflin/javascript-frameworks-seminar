@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateToDoDto } from './dto/create-to-do.dto';
 import { UpdateToDoDto } from './dto/update-to-do.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,17 +9,16 @@ import { Repository } from 'typeorm';
 export class ToDoService {
   constructor(
     @InjectRepository(ToDoEntity)
-    private readonly todoRepository: Repository<ToDoEntity>,
+    private todoRepository: Repository<ToDoEntity>,
   ) { }
 
-  async create(
-    CreateToDoDto: CreateToDoDto,
-  ): Promise<ToDoEntity> {
-    const todoData =
-      await this.todoRepository.create(
-        CreateToDoDto,
-      )
-    return this.todoRepository.save(todoData)
+  async create(createToDoDto: CreateToDoDto): Promise<ToDoEntity> {
+    const newTodo = this.todoRepository.create({
+      ...createToDoDto,
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+    });
+    return await this.todoRepository.save(newTodo);
   }
 
   async findAll(): Promise<ToDoEntity[]> {
@@ -38,18 +37,17 @@ export class ToDoService {
     return todoData
   }
 
-  async update(id: number, updateToDoDto: UpdateToDoDto): Promise<UpdateToDoDto> {
-    if (!updateToDoDto.dateUpdated) {
-      updateToDoDto.dateUpdated = new Date()
+  async update(id: number, updateToDoDto: UpdateToDoDto): Promise<ToDoEntity> {
+    const todo = await this.todoRepository.findOne({ where: { id } })
+    if (!todo) {
+      throw new NotFoundException(`Todo with id: ${id} not found.`)
     }
-    const existingTodo = await this.findOne(id)
-    const todoData = this.todoRepository.merge(
-      existingTodo,
-      updateToDoDto
-    )
-    return await this.todoRepository.save(
-      todoData
-    )
+
+    Object.assign(todo, updateToDoDto)
+
+    todo.dateUpdated = new Date()
+
+    return await this.todoRepository.save(todo)
   }
 
   async remove(id: number): Promise<ToDoEntity> {
